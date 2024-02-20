@@ -40,18 +40,27 @@
 |
 */
 
-$route['default_controller'] = "login";
-$route['no_access/(:any)'] = "no_access/index/$1";
-$route['reports/(summary_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
-$route['reports/summary_:any'] = "reports/date_input";
+// Define the default controller
+$route['default_controller'] = "home";
 
-$route['reports/(detailed_sales)/(:any)/(:any)'] = "reports/$1/$2/$3";
-$route['reports/detailed_sales'] = "reports/date_input";
-$route['reports/(specific_:any)/(:any)/(:any)/(:any)'] = "reports/$1/$2/$3/$4";
-$route['reports/specific_customer'] = "reports/specific_customer_input";
-$route['reports/specific_employee'] = "reports/specific_employee_input";
+// Define a route group for reports
+$route['reports/(:any)'] = array(
+  // Match summary reports with three parameters
+  'summary_(:any)/(:num)/(:num)' => 'reports/$1/$2/$3',
+  // Match detailed sales reports with three parameters
+  'detailed_sales/(:num)/(:num)' => 'reports/$1/$2/$3',
+  // Match specific reports with four parameters
+  'specific_(:any)/(:num)/(:num)/(:num)' => 'reports/$1/$2/$3/$4',
+  // Match any other report with no parameters
+  '(:any)' => 'reports/date_input'
+);
 
+// Define a route for no access with one parameter
+$route['no_access/(:name)'] = "no_access/index/$1";
+
+// Define a route for scaffolding trigger with no parameter
 $route['scaffolding_trigger'] = "";
+
 
 
 /* End of file routes.php */

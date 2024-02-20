@@ -139,14 +139,15 @@ function &load_class($class, $instantiate = TRUE)
 	{
 		$name = config_item('subclass_prefix').$class;
 
-		$objects[$class] =& instantiate_class(new $name());
+		$objects[$class] = instantiate_class(new $name());
 		return $objects[$class];
 	}
 
 	$name = ($class != 'Controller') ? 'CI_'.$class : $class;
 
-	$objects[$class] =& instantiate_class(new $name());
+	$objects[$class] = new $name();
 	return $objects[$class];
+  
 }
 
 /**
@@ -172,7 +173,7 @@ function &instantiate_class(&$class_object)
 * @access	private
 * @return	array
 */
-function &get_config()
+function get_config()
 {
 	static $main_conf;
 
@@ -190,7 +191,7 @@ function &get_config()
 			exit('Your config file does not appear to be formatted correctly.');
 		}
 
-		$main_conf[0] =& $config;
+		$main_conf[0] = $config;
 	}
 	return $main_conf[0];
 }
@@ -207,7 +208,7 @@ function config_item($item)
 
 	if ( ! isset($config_item[$item]))
 	{
-		$config =& get_config();
+		$config = get_config();
 
 		if ( ! isset($config[$item]))
 		{
@@ -267,7 +268,7 @@ function show_404($page = '')
 * @access	public
 * @return	void
 */
-function log_message($level = 'error', $message, $php_error = FALSE)
+function log_message( $message,$level = 'error', $php_error = FALSE)
 {
 	static $LOG;
 	
